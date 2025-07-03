@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  background: #f4f6fb;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 18px 0 18px 0;
+  margin-bottom: 32px;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #3a4ca8;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+}
+
+nav a {
+  color: #3a4ca8;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+nav a.active, nav a:hover {
+  background: #e3e7fa;
+}
+
+footer {
+  text-align: center;
+  color: #888;
+  font-size: 0.95rem;
+  margin: 32px 0 0 0;
+  padding: 16px 0 0 0;
+  border-top: 1px solid #eee;
+  background: #fff;
+}

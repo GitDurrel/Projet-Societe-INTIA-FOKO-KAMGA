@@ -1,0 +1,37 @@
+<div class="client-list-container">
+  <h2>Clients</h2>
+  <button class="btn-add" (click)="openForm()">Ajouter un client</button>
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="!loading && clients.length === 0" class="empty">Aucun client trouvé.</div>
+  <ul *ngIf="!loading && clients.length > 0" class="client-list">
+    <li *ngFor="let client of clients">
+      <div class="client-info">
+        <span class="client-name">{{ client.prenom }} {{ client.nom }}</span>
+        <span class="client-email">{{ client.email }}</span>
+        <span class="client-tel">{{ client.telephone }}</span>
+        <span class="client-adr">{{ client.adresse }}</span>
+      </div>
+      <div class="client-actions">
+        <button (click)="editClient(client)" class="btn-edit">Modifier</button>
+        <button (click)="deleteClient(client.id)" class="btn-delete">Supprimer</button>
+      </div>
+    </li>
+  </ul>
+
+  <div *ngIf="showForm" class="client-form-modal">
+    <div class="client-form-card">
+      <h3>{{ editMode ? 'Modifier' : 'Ajouter' }} un client</h3>
+      <form [formGroup]="clientForm" (ngSubmit)="submitForm()">
+        <input formControlName="nom" placeholder="Nom" required>
+        <input formControlName="prenom" placeholder="Prénom" required>
+        <input formControlName="email" placeholder="Email" required type="email">
+        <input formControlName="telephone" placeholder="Téléphone">
+        <input formControlName="adresse" placeholder="Adresse">
+        <div class="form-actions">
+          <button type="submit" [disabled]="clientForm.invalid">{{ editMode ? 'Mettre à jour' : 'Ajouter' }}</button>
+          <button type="button" (click)="closeForm()" class="btn-cancel">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

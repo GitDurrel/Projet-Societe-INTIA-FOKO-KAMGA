@@ -1,0 +1,40 @@
+<div class="assurance-list-container">
+  <h2>Assurances</h2>
+  <button class="btn-add" (click)="openForm()">Ajouter une assurance</button>
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="!loading && assurances.length === 0" class="empty">Aucune assurance trouvée.</div>
+  <ul *ngIf="!loading && assurances.length > 0" class="assurance-list">
+    <li *ngFor="let assurance of assurances">
+      <div class="assurance-info">
+        <span class="assurance-type">Type : {{ assurance.type }}</span>
+        <span class="assurance-num">Police : {{ assurance.numero_police }}</span>
+        <span class="assurance-date">Du {{ assurance.date_debut }} au {{ assurance.date_fin }}</span>
+        <span class="assurance-montant">Montant : {{ assurance.montant | number:'1.2-2' }} €</span>
+        <span class="assurance-client">Client ID : {{ assurance.client_id }}</span>
+      </div>
+      <div class="assurance-actions">
+        <button (click)="editAssurance(assurance)" class="btn-edit">Modifier</button>
+        <button (click)="deleteAssurance(assurance.id)" class="btn-delete">Supprimer</button>
+      </div>
+    </li>
+  </ul>
+
+  <div *ngIf="showForm" class="assurance-form-modal">
+    <div class="assurance-form-card">
+      <h3>{{ editMode ? 'Modifier' : 'Ajouter' }} une assurance</h3>
+      <form [formGroup]="assuranceForm" (ngSubmit)="submitForm()">
+        <input formControlName="type" placeholder="Type" required>
+        <input formControlName="numero_police" placeholder="Numéro de police" required>
+        <input formControlName="date_debut" type="date" placeholder="Date de début" required>
+        <input formControlName="date_fin" type="date" placeholder="Date de fin" required>
+        <input formControlName="montant" type="number" placeholder="Montant" required>
+        <input formControlName="client_id" type="number" placeholder="ID du client" required>
+        <div class="form-actions">
+          <button type="submit" [disabled]="assuranceForm.invalid">{{ editMode ? 'Mettre à jour' : 'Ajouter' }}</button>
+          <button type="button" (click)="closeForm()" class="btn-cancel">Annuler</button>
+        </div>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      </form>
+    </div>
+  </div>
+</div> 
