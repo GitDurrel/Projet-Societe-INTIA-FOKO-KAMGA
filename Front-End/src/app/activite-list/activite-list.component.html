@@ -43,10 +43,10 @@
         <li *ngFor="let activite of activitesParJour()[jour]">
           <b>{{ activite.titre }}</b> ({{ activite.heure_debut }} - {{ activite.heure_fin }})
           — <span class="personnel-label">
-            {{ getNom(personnels.find(p => p.id === activite.personnel_id)) }}
+            {{ getPersonnelDetails(activite.personnel_id).nom }}
           </span>
           <span>
-            ({{ personnels.find(p => p.id === activite.personnel_id)?.email || '' }})
+            ({{ getPersonnelDetails(activite.personnel_id).email }})
           </span>
           <button (click)="modifier(activite)">Modifier</button>
           <button (click)="supprimer(activite.id!)">Supprimer</button>

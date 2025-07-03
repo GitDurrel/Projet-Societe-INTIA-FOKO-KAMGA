@@ -6,6 +6,12 @@ import { PersonnelService } from '../services/personnel.service';
 import { Activite } from '../models/activite.model';
 import { Personnel } from '../models/personnel.model';
 
+// Interface pour les détails du personnel à afficher
+interface PersonnelDetails {
+  nom: string;
+  email: string;
+}
+
 @Component({
   selector: 'app-activite-list',
   standalone: true,
@@ -104,7 +110,14 @@ export class ActiviteListComponent implements OnInit {
     return resultat;
   }
 
-  public getNom(personnel: Personnel | undefined): string {
-    return personnel?.nom || personnel?.name || 'Nom inconnu';
+  public getPersonnelDetails(personnelId: number | undefined): PersonnelDetails {
+    if (personnelId === undefined || !this.personnels || this.personnels.length === 0) {
+      return { nom: 'Personnel non spécifié', email: 'N/A' };
+    }
+    const personnel = this.personnels.find(p => p.id === personnelId);
+    if (personnel) {
+      return { nom: personnel.nom || personnel.name || 'Nom inconnu', email: personnel.email || 'Email inconnu' };
+    }
+    return { nom: 'Personnel introuvable', email: 'N/A' };
   }
 } 
