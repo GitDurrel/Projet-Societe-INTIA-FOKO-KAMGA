@@ -6,4 +6,4 @@
  *     description="Documentation de l'API pour la gestion des clients et des assurances pour la société d'assurance INTIA."
  * )
  */
-class SwaggerInfo {} 
+
