@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\AssuranceController;
+use App\Http\Controllers\ActiviteController;
+use App\Http\Controllers\PersonnelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,6 @@ use App\Http\Controllers\AssuranceController;
 |
 */
 Route::apiResource('clients', ClientController::class);
-Route::apiResource('assurances', AssuranceController::class); 
+Route::apiResource('assurances', AssuranceController::class);
+Route::apiResource('activites', ActiviteController::class);
+Route::apiResource('personnels', PersonnelController::class); 

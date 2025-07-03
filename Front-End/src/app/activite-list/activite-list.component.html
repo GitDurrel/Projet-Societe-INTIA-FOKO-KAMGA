@@ -1,0 +1,58 @@
+<div class="container">
+  <h2>Gestion des activités du personnel</h2>
+
+  <form [formGroup]="activiteForm" (ngSubmit)="soumettre()">
+    <div>
+      <label>Personnel :</label>
+      <select formControlName="personnel_id" required>
+        <option value="" disabled selected>Choisir un membre du personnel</option>
+        <option *ngFor="let personnel of personnels" [value]="personnel.id">
+          {{ personnel.nom || personnel.name }} — {{ personnel.email }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label>Titre :</label>
+      <input formControlName="titre" type="text" placeholder="Titre de l'activité" required />
+    </div>
+    <div>
+      <label>Jour de la semaine :</label>
+      <select formControlName="jour_semaine" required>
+        <option *ngFor="let jour of joursSemaine" [value]="jour">{{ jour }}</option>
+      </select>
+    </div>
+    <div>
+      <label>Heure de début :</label>
+      <input formControlName="heure_debut" type="time" required />
+    </div>
+    <div>
+      <label>Heure de fin :</label>
+      <input formControlName="heure_fin" type="time" required />
+    </div>
+    <button type="submit" [disabled]="activiteForm.invalid">{{ edition ? 'Modifier' : 'Ajouter' }} l'activité</button>
+    <button type="button" *ngIf="edition" (click)="annulerEdition()">Annuler</button>
+  </form>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <div class="activites-list">
+    <h3>Liste des activités par jour</h3>
+    <div *ngFor="let jour of joursSemaine">
+      <h4>{{ jour }}</h4>
+      <ul>
+        <li *ngFor="let activite of activitesParJour()[jour]">
+          <b>{{ activite.titre }}</b> ({{ activite.heure_debut }} - {{ activite.heure_fin }})
+          — <span class="personnel-label">
+            {{ getNom(personnels.find(p => p.id === activite.personnel_id)) }}
+          </span>
+          <span>
+            ({{ personnels.find(p => p.id === activite.personnel_id)?.email || '' }})
+          </span>
+          <button (click)="modifier(activite)">Modifier</button>
+          <button (click)="supprimer(activite.id!)">Supprimer</button>
+        </li>
+        <li *ngIf="activitesParJour()[jour].length === 0">Aucune activité</li>
+      </ul>
+    </div>
+  </div>
+</div> 
