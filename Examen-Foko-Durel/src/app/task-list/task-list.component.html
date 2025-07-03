@@ -1,0 +1,33 @@
+<div class="task-list-container">
+  <h2>Liste des Tâches</h2>
+  <div *ngIf="loading" class="loading">Chargement...</div>
+  <div *ngIf="!loading && tasks.length === 0" class="empty">Aucune tâche trouvée.</div>
+  <form (ngSubmit)="addTask()" #taskForm="ngForm" class="add-task-form">
+    <input type="text" name="titre" [(ngModel)]="newTask.titre" placeholder="Titre" required>
+    <input type="text" name="description" [(ngModel)]="newTask.description" placeholder="Description" required>
+    <input type="date" name="date_echeance" [(ngModel)]="newTask.date_echeance" required>
+    <input type="number" name="categorie_id" [(ngModel)]="newTask.categorie_id" required>
+    <button type="submit" [disabled]="taskForm.invalid">Ajouter</button>
+  </form>
+  <ul *ngIf="!loading && tasks.length > 0" class="task-list">
+    <li *ngFor="let task of tasks" [class.read]="task.statut === 'terminee'">
+      <div class="task-header">
+        <span class="task-title">{{ task.titre }}</span>
+        <span class="task-status" [ngClass]="{'done': task.statut === 'terminee'}">
+          {{ task.statut === 'terminee' ? 'Terminée' : 'En cours' }}
+        </span>
+      </div>
+      <div class="task-body">
+        <span class="task-desc">{{ task.description }}</span>
+        <span class="task-date">Échéance : {{ task.date_echeance | date:'shortDate' }}</span>
+      </div>
+      <div class="task-actions">
+        <button (click)="markAsRead(task)" [disabled]="task.statut === 'terminee'" class="btn-read">
+          {{ task.statut === 'terminee' ? 'Lue' : 'Marquer comme lue' }}
+        </button>
+        <button (click)="deleteTask(task.id)" class="btn-delete">Supprimer</button>
+      </div>
+    </li>
+  </ul>
+</div>
+
